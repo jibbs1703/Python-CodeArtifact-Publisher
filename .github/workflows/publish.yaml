@@ -53,6 +53,19 @@ jobs:
             --query authorizationToken \
             --output text)
           echo "token=$TOKEN" >> $GITHUB_OUTPUT
+      
+      - name: Configure .pypirc for CodeArtifact
+        run: |
+          cat > ~/.pypirc <<EOF
+          [distutils]
+          index-servers =
+              ${{ env.CODEARTIFACT_REPOSITORY }}
+
+          [${{ env.CODEARTIFACT_REPOSITORY }}]
+          repository = https://${{ env.CODEARTIFACT_DOMAIN }}-${{ env.CODEARTIFACT_OWNER }}.d.codeartifact.${{ secrets.AWS_REGION }}.amazonaws.com/pypi/${{ env.CODEARTIFACT_REPOSITORY }}/
+          username = aws
+          password = ${{ steps.codeartifact.outputs.token }}
+          EOF
 
       - name: Upload to CodeArtifact
         run: |
