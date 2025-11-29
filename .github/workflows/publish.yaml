@@ -120,6 +120,8 @@ jobs:
           asset_path: dist/jibbspackage-${{ steps.get_version.outputs.version }}.tar.gz
           asset_name: jibbspackage-${{ steps.get_version.outputs.version }}.tar.gz
           asset_content_type: application/gzip
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
 
       - name: Upload Wheel Asset
         if: startsWith(github.ref, 'refs/tags/')
@@ -129,3 +131,5 @@ jobs:
           asset_path: dist/jibbspackage-${{ steps.get_version.outputs.version }}.whl
           asset_name: jibbspackage-${{ steps.get_version.outputs.version }}.whl
           asset_content_type: application/zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
