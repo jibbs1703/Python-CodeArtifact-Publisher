@@ -53,3 +53,14 @@ private CodeArtifact repository.
    terraform plan # Review the planned changes
    terraform apply -auto-approve # Apply the changes to create resources
    ```
+
+### Publishing Python Packages
+- Set up GitHub Actions workflows in your repository to automate package publishing.
+
+- Modify the workflow files to include your AWS credentials and repository details.
+  - CODEARTIFACT_DOMAIN - the name of your CodeArtifact domain (must match the domain created via Terraform)
+  - CODEARTIFACT_REPOSITORY - the name of your CodeArtifact repository (must match the repository created via Terraform)
+  - CODEARTIFACT_OWNER - your AWS account ID (stored as a GitHub secret)
+  - AWS_ACCESS_KEY_ID - your AWS access key ID (stored as a GitHub secret)
+  - AWS_SECRET_ACCESS_KEY - your AWS secret access key (stored as a GitHub secret)
+  - AWS_REGION - the AWS region where your CodeArtifact resources are located (stored as a GitHub secret)
