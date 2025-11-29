@@ -1,6 +1,6 @@
 [project]
 name = "simplepackage"
-version = "1.0.0"
+dynamic = ["version"]
 description = "A simple example package for publishing to AWS CodeArtifact."
 keywords = ["AWS", "CodeArtifact", "Package Publishing"]
 readme = "README.md"
@@ -36,19 +36,12 @@ dev = [
 simplepackage-hello = "simplepackage.simple:hello"
 
 [build-system]
-requires = ["setuptools", "build"]
+requires = ["setuptools>=61", "setuptools-scm>=8", "build"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 include = ["simplepackage"]
 
-[tool.pytest.ini-options]
-markers = [
-    "unit: mark a test as a unit test"
-]
-testpaths = ["tests"]
-
-[tool.coverage.run]
-omit = [
-    "tests/*",
-]
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "node-and-date"
