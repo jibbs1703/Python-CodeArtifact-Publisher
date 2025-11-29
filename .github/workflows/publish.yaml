@@ -59,9 +59,9 @@ jobs:
           cat > ~/.pypirc <<EOF
           [distutils]
           index-servers =
-              ${{ env.CODEARTIFACT_REPOSITORY }}
+              codeartifact
 
-          [${{ env.CODEARTIFACT_REPOSITORY }}]
+          [codeartifact]
           repository = https://${{ env.CODEARTIFACT_DOMAIN }}-${{ env.CODEARTIFACT_OWNER }}.d.codeartifact.${{ secrets.AWS_REGION }}.amazonaws.com/pypi/${{ env.CODEARTIFACT_REPOSITORY }}/
           username = aws
           password = ${{ steps.codeartifact.outputs.token }}
@@ -70,7 +70,7 @@ jobs:
       - name: Upload to CodeArtifact
         run: |
           twine upload \
-            --repository ${{ env.CODEARTIFACT_REPOSITORY }} \
+            --repository codeartifact \
             --username aws \
             --password ${{ steps.codeartifact.outputs.token }} \
             dist/*
