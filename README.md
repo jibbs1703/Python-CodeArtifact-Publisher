@@ -1,7 +1,7 @@
-# Python-Codeartifact-Publisher
+# Python-CodeArtifact-Publisher
 
-This repository provides a minimal and reproducible terraform configuration for setting up AWS CodeArtifact resources. It also includes GitHub Actions workflows to automate the publishing of Python packages to the
-private CodeArtifact repository.
+This repository provides a minimal and reproducible terraform configuration for setting up AWS CodeArtifact resources. It also includes GitHub Actions workflows to automate the publishing of Python packages to the private CodeArtifact repository.
+The setup is designed to be straightforward, allowing developers to quickly integrate CodeArtifact into their CI/CD pipelines for Python package management.
 
 ## Features
 - **Terraform Configuration**: Easily deploy AWS CodeArtifact Domain and Repositories using Terraform.
