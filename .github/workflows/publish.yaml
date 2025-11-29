@@ -39,7 +39,7 @@ jobs:
         id: get_version
         run: |
           VERSION=$(python -c "import setuptools_scm; print(setuptools_scm.get_version())")
-          echo "version=$VERSION" >> $GITHUB_ENV
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
       
       - name: Build Package
         run: |
@@ -115,7 +115,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/jibbspackage-*.tar.gz
+          asset_path: dist/jibbspackage-${{ steps.get_version.outputs.version }}.tar.gz
           asset_name: jibbspackage-${{ steps.get_version.outputs.version }}.tar.gz
           asset_content_type: application/gzip
 
@@ -124,6 +124,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/jibbspackage-*.whl
+          asset_path: dist/jibbspackage-${{ steps.get_version.outputs.version }}.whl
           asset_name: jibbspackage-${{ steps.get_version.outputs.version }}.whl
           asset_content_type: application/zip
