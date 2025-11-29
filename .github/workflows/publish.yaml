@@ -2,8 +2,8 @@ name: Publish to AWS CodeArtifact
 
 on:
   push:
-    branches:
-      - "main"
+    # branches:
+    #   - "main"
     tags:
       - "v*"
 
@@ -28,12 +28,18 @@ jobs:
       - name: Install Build Tools
         run: |
           python -m pip install --upgrade pip
-          python -m pip install build setuptools twine
+          python -m pip install build setuptools twine setuptools-scm
       
       - name: Install Package Dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e .[dev]
+      
+      - name: Get Version
+        id: get_version
+        run: |
+          VERSION=$(python -c "import setuptools_scm; print(setuptools_scm.get_version())")
+          echo "version=$VERSION" >> $GITHUB_ENV
       
       - name: Build Package
         run: |
@@ -78,7 +84,19 @@ jobs:
             dist/* \
             --verbose
       
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      
+      - name: Tag and Push Version
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git tag v${{ steps.get_version.outputs.version }}
+          git push origin v${{ steps.get_version.outputs.version }}
+      
       - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
         id: create_release
         uses: actions/create-release@v1
         with:
@@ -93,17 +111,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
 
       - name: Upload Release Assets
+        if: startsWith(github.ref, 'refs/tags/')
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/jibbspackage-*.tar.gz
-          asset_name: jibbspackage-${{ github.ref_name }}.tar.gz
+          asset_name: jibbspackage-${{ steps.get_version.outputs.version }}.tar.gz
           asset_content_type: application/gzip
 
       - name: Upload Wheel Asset
+        if: startsWith(github.ref, 'refs/tags/')
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/jibbspackage-*.whl
-          asset_name: jibbspackage-${{ github.ref_name }}.whl
+          asset_name: jibbspackage-${{ steps.get_version.outputs.version }}.whl
           asset_content_type: application/zip
