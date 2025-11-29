@@ -26,7 +26,16 @@ jobs:
       - name: Install Build Tools
         run: |
           python -m pip install --upgrade pip
-          python -m pip install build twine awscli
+          python -m pip install build setuptools twine
+      
+      - name: Install Package Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .[dev]
+      
+      - name: Build Package
+        run: |
+          python -m build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -44,9 +53,6 @@ jobs:
             --query authorizationToken \
             --output text)
           echo "token=$TOKEN" >> $GITHUB_OUTPUT
-
-      - name: Build Package
-        run: python -m build
 
       - name: Upload to CodeArtifact
         run: |

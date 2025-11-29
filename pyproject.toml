@@ -1,0 +1,54 @@
+[project]
+name = "simplepackage"
+version = "1.0.0"
+description = "A simple example package for publishing to AWS CodeArtifact."
+keywords = ["AWS", "CodeArtifact", "Package Publishing"]
+readme = "README.md"
+requires-python = ">=3.13"
+
+authors = [
+    { name = "Abraham Ajibade", email = "abraham0ajibade@gmail.com" }
+]
+maintainers = [
+    { name = "Abraham Ajibade", email = "abraham0ajibade@gmail.com" }
+]
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License"
+]
+
+dependencies = [
+    "python-dotenv==1.0.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit>=4.2.0",
+    "pytest>=8.3.4",
+    "ruff>=0.9.4",
+]
+
+[project.scripts]
+simplepackage-hello = "simplepackage.simple:hello"
+
+[build-system]
+requires = ["setuptools", "build"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["simplepackage"]
+
+[tool.pytest.ini-options]
+markers = [
+    "unit: mark a test as a unit test"
+]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+omit = [
+    "tests/*",
+]
