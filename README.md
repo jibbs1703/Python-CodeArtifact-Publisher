@@ -18,7 +18,35 @@ private CodeArtifact repository.
 
 ### Deploying Infrastructure
 
+- Assign AWS credentials to your environment with sufficient permissions to create CodeArtifact resources.
+
+```
+{
+"Version": "2012-10-17",
+"Statement": [
+   {
+     "Effect": "Allow",
+     "Action": [
+          "codeartifact:*"
+     ],
+     "Resource": "*"
+   },
+   {       
+     "Effect": "Allow",
+     "Action": "sts:GetServiceBearerToken",
+     "Resource": "*",
+     "Condition": {
+         "StringEquals": {
+             "sts:AWSServiceName": "codeartifact.amazonaws.com"
+         }
+      }
+    }
+]
+}
+```
+
 - Navigate to the `infra` directory.and modify the `variables.tf` file to set your desired domain and repository names.
+
 - Run terrform commands to deploy the infrastructure:
    ```bash
    terraform init # Initialize the Terraform configuration
