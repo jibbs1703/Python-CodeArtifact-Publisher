@@ -1,4 +1,4 @@
-"""simple module for the simplepackage package."""
+"""simple module for the jibbspackage package."""
 
 def hello(name: str = "world") -> str:
     """Return a friendly greeting.
