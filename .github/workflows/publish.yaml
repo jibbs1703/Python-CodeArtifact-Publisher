@@ -113,3 +113,12 @@ jobs:
             dist/jibbspackage-*.whl
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+
+      - name: Verify Published Package
+        run: |
+          python -m pip install \
+          --index-url https://${{ env.CODEARTIFACT_DOMAIN }}-${{ env.CODEARTIFACT_OWNER }}.d.codeartifact.${{ secrets.AWS_REGION }}.amazonaws.com/pypi/${{ env.CODEARTIFACT_REPOSITORY }}/simple/ \
+          --extra-index-url https://pypi.org/simple \
+          jibbspackage==${{ steps.get_version.outputs.version }}
+          python -c "import jibbspackage.simple; print('Package installed successfully:', jibbspackage.simple.hello())"
+      
