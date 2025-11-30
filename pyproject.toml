@@ -4,6 +4,7 @@ dynamic = ["version"]
 description = "A simple example package for publishing to AWS CodeArtifact."
 keywords = ["AWS", "CodeArtifact", "Package Publishing"]
 readme = "README.md"
+license = "MIT"
 requires-python = ">=3.10"
 
 authors = [
@@ -21,7 +22,6 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
-    "License :: OSI Approved :: MIT License"
 ]
 
 dependencies = [
