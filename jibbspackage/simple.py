@@ -23,4 +23,3 @@ def goodbye(name: str = "world") -> str:
         A farewell string.
     """
     return f"Goodbye, {name}!"
-

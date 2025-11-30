@@ -1,0 +1,19 @@
+name: JibbsPackage CI/CD
+
+on:
+  push:
+    branches:
+      - "main"
+    paths-ignore:
+      - "README.md"
+      - "LICENSE"
+      - ".gitignore"
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yaml
+
+  publish:
+    uses: ./.github/workflows/publish.yaml
+    needs: test
+    secrets: inherit
