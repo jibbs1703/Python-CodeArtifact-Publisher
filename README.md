@@ -64,3 +64,26 @@ The setup is designed to be straightforward, allowing developers to quickly inte
   - AWS_ACCESS_KEY_ID - your AWS access key ID (stored as a GitHub secret)
   - AWS_SECRET_ACCESS_KEY - your AWS secret access key (stored as a GitHub secret)
   - AWS_REGION - the AWS region where your CodeArtifact resources are located (stored as a GitHub secret)
+
+- Commit and push your changes to trigger the GitHub Actions workflows.
+
+## Using the Published Package
+Once the package is published, there are three ways to install the package in Python projects:
+  
+  1. Using pip with CodeArtifact repository URL:
+  ```bash
+  python -m pip install --index-url https://<CODEARTIFACT_DOMAIN>-<CODEARTIFACT_OWNER>.d.codeartifact.<AWS_REGION>.amazonaws.com/pypi/<CODEARTIFACT_REPOSITORY>/simple/ --extra-index-url https://pypi.org/simple <PACKAGE_NAME>
+  ```
+
+  2. Configuring pip to use CodeArtifact as a trusted host in the pip configuration file (`~/.pip/pip.conf` or `~/.config/pip/pip.conf`):
+  ```ini
+  [global]
+  index-url = https://<CODEARTIFACT_DOMAIN>-<CODEARTIFACT_OWNER>.d.codeartifact.<AWS_REGION>.amazonaws.com/pypi/<CODEARTIFACT_REPOSITORY>/simple/
+  extra-index-url = https://pypi.org/simple
+  trusted-host = <CODEARTIFACT_DOMAIN>-<CODEARTIFACT_OWNER>.d.codeartifact.<AWS_REGION>.amazonaws.com
+  ```
+
+  3. Install the package directly from the GitHub Release page
+  ```bash
+  python -m pip install <URL_TO_RELEASE_PACKAGE>
+  ``` 
