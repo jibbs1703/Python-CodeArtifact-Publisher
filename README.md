@@ -83,7 +83,7 @@ Once the package is published, there are three ways to install the package in Py
   trusted-host = <CODEARTIFACT_DOMAIN>-<CODEARTIFACT_OWNER>.d.codeartifact.<AWS_REGION>.amazonaws.com
   ```
 
-  3. Install the package directly from the GitHub Release page
+  3. Install the package directly from the GitHub Release page using pip:
   ```bash
   python -m pip install <URL_TO_RELEASE_PACKAGE>
   ``` 
